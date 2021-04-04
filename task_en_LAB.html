@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<h4>Windows Forms - lab part</h4>
+	<h2>Book Cover Designer</h2>
+	<ul>
+		<li><a href="BookCoverDesigner_LAB.exe">Example application</a></li>
+		<li>Task description:
+			<ul>
+			<li>Main window and controls:</li>
+				<ul>
+					<li>Main window has a minimum size of 800x600, starts centered on the screen and has a starting size of 1400x900</li>
+					<li>Main window is split into two sections using split panel</li>
+					<li>In the left panel there is a picture box (drawing area) filling the whole panel</li>
+					<li>When the window is resized or splitter is moved, the bitmap of the picture box resizes to match available space</li>
+					<li>Right panel has a minimum width of 200 pixels</li>
+					<li>In the right panel there are 3 text boxes ('Title', 'Author' and 'Additional Text') with labels and a single button, all organized in the table with a single column</li>
+					<li>All labels have a font size of 10pt and are bolded</li>
+					<li>Text boxes for title and additional text accept multiline strings. Text box for the author allows for singleline strings only</li>
+					<li>Text box for additional text has a vertical scroll bar</li>
+					<li>All controls on the right side stretch horizontally to fill all available space</li>
+				</ul>
+			<li>Book cover:</li>
+				<ul>
+					<li>In the center of the picture box there are three dark gray rectangles indicating bounds of book cover</li>
+					<li>The three rectangles are always drawn centered, regardless of panel size</li>
+				</ul>
+			<li>Adding texts:</li>
+				<ul>
+					<li>Text written in the text box labeled 'Additional Text' can be added to the book's cover</li>
+					<li>The texts are drawn using 'Arial' font of size 16pt</li>
+					<li>Pressing the button changes the cursor to cross while over the picture box</li>
+					<li>Clicking anywhere in the picture box area removes the text from the text box and adds it to the drawing</li>
+					<li>New texts should be added centered around the point where the user clicked</li>
+					<li>When resizing the drawing area, all texts should stay in the same position relative to the cover's bounds</li>
+				</ul>
+			</ul>
+		</li>
+		<li>Tips:
+			<ul>
+				<li>SplitContainer, PictureBox, TableLayoutPanel, Dock Property, Anchor Property</li>
+				<li>SplitContainer.SplitterMoved, Control.Resize</li>
+				<li>Bitmap, Graphics.FromImage, Graphics.DrawRectangles</li>
+				<li>Control.Cursor, Graphics.DrawString</li>
+				<li>Graphics.MeasureString</li>
+			</ul>
+		</li>
+		<li><i>Note: In all doubtful and untold aspects application should behave like an example app.</i></li>
+	</ul>
+	<ul>
+		<li>Scoring:
+		<ul>
+			<li>Correctly defined window and properly scaling UI controls: 4 points</li>
+			<li>Drawing centered cover bounds: 3 points</li>
+			<li>Adding texts: 4 points</li>
+			<li>New texts are added centered relative to the cursor: 1 point</li>
+			<li><i>Note: It is not possible to obtain points for incomplete functionality.</i></li>
+		</ul>
+		</li>
+	</ul>
+</body>
+</html>

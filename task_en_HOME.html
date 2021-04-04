@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<h4>Windows Forms - home part</h4>
+	<h2>Book Cover Designer</h2>
+	<ul>
+		<li><a href="BookCoverDesigner_HOME.exe">Example application</a></li>
+		<li>Task description:
+			<ul>
+				<li>Menu bar and new project:</li>
+					<ul>
+						<li>On the top of the window there is a menu bar with 2 options: 'File' and 'Settings'</li>
+						<li>Under 'File' there are 3 options, each accessible with a shortcut: 'New', 'Open' and 'Save'</li>
+						<li>Under 'Settings' there is a single option 'Language' which can be extended and one of two languages can be selected. After selecting an option the other one deselects</li>
+						<li>You can use the menu options by pressing the alt key and using letters corresponding to a given option</li>
+						<li>Choosing the 'New' option displays a dialog box which allows to enter dimensions of a new cover:</li>
+						<ul>
+							<li>The dialogbox can not be resized</li>
+							<li>Content of the dialogbox is divided into 2 columns and 4 rows</li>
+							<li>Pressing the cancel button or closing the dialog box does not create a new project</li>
+							<li>Pressing the OK button creates a new project with no title or author and all additional texts are removed as well as the colors are set to default</li>
+						</ul>
+					</ul>
+				<li>Displaying title and author:</li>
+					<ul>
+						<li>Title and author's name from the text boxes are displayed on the front cover (on the right) and on the book's spine using 'Arial' font</li>
+						<li>Front cover:</li>
+							<ul>
+								<li>The default title's font size is 32pt</li>
+								<li>Title can take up to 1/3 of the cover's height and the whole width</li>
+								<li>Title's text is drawn with the left line alignement but the title should always be drawn on the center of the cover</li>
+								<li>Author's name is displayed below the title and can take up to a 1/6 of the cover's height</li>
+								<li>The default authors's font size is 24pt</li>
+								<li>Author's name should always be centered</li>
+								<li>If the title or author's name would take up more space than available, it should be drawn using the biggest possible size available (integers only)</li>
+							</ul>
+						<li>Spine:</li>
+							<ul>
+								<li>Title and author's name are also drawn on the spine, rotated 90 degrees</li>
+								<li>All sequences of whitespace characters from title are replaced with a single space</li>
+								<li>The available space on the spine is divided in half for the title and the author</li>
+								<li>Default font sizes are the same as for the book's cover and sizes adjust if not enough space is available</li>
+							</ul>
+					</ul>
+				<li>Changing cover and text colors:</li>
+					<ul>
+						<li>There is a new section on the right that allows to change the color of the cover and all texts</li>
+						<li>There are 2 labels and 2 buttons</li>
+						<li>The labels and buttons are organized in a 2 by 2 table with border</li>
+						<li>Labels' font size is 11pt</li>
+						<li>Clicking one of the two buttons opens a color picker dialog and allows to change the color of the cover's background and the color of the text</li>
+					</ul>
+				<li>Adding and editing texts:</li>
+					<ul>
+						<li>Text box for adding text from lab part is removed</li>
+						<li>Pressing the 'Add text' button opens a new dialogbox for text editing:</li>
+							<ul>
+								<li>The dialogbox can not be resized</li>
+								<li>There is a numeric input field that allows to change text font size</li>
+								<li>There are 3 radiobuttons that control text alignement</li>
+								<li>The rest of the dialogbox is filled with a multline text box with a vertical scroll bar</li>
+								<li>Changing line alignement changes the alignement of the text in the text box</li>
+								<li>There are 2 buttons on the bottom of the dialog for cancelling and accepting text addition or modification</li>
+							</ul>
+						<li>As before, after confirming the text addition, cursor changes to cross while over the picture box and clicking anywhere on the drawing area adds new text</li>
+						<li>Double clicking on any previously added text opens up the dialog box with all fields filled appropriately. Changing and accepting the changes with 'OK' button modifies the text</li>
+						<li>After text editing, the text should stay centered around the same point as before</li>
+					</ul>
+				<li>Selecting, moving and deleting additional texts:</li>
+					<ul>
+						<li>Right clicking on any existing additional text selects it and a border is drawn around it</li>
+						<li>Only one text can be selected at a time</li>
+						<li>Color of the border is the inversed color of the cover's background color</li>
+						<li>Moving the mouse with the middle mouse button pressed moves selected text</li>
+						<li>Right clicking on any part of the drawing area not containing any text should deselect any already selected text</li>
+						<li>Pressing the delete key with a text selected removes that text</li>
+					</ul>
+				<li>Localization:</li>
+					<ul>
+						<li>The application should support two languages (English and any other).</li>
+						<li>The application's default language is English</li>
+						<li>Language can be changed using menu option (Settings->Language). Each text in the application should be changed to an equivalent in a different language.</br> 
+						<b> Note: </b> this should be done using a localization mechanism - changing the Text / Title property will not be scored </li>
+						<li>After changing the localization all controls should be reloaded correctly</li>
+						<li>The main window should remain in the same position and be the same size </li>
+					</ul>
+				<li>Saving and loading the project:</li>
+					<ul>
+						<li>The project can be saved and loaded by choosing the 'Save' and 'Open' options from the menu</li>
+						<li>The format of the file containing the saved project is not specified by the task</li>
+						<li>Every information should be saved, including: title, author, additional texts (with font size and line alignement), background and text colors</li>
+						<li>To save or load a project an appropriate dialog box is opened</li>
+						<li>Save dialog should force default file extension (chosen appropriately)</li>
+						<li>Dialogbox should force user to load only files with the chosen extension</li>
+						<li>The app should notify the user if the loaded project file is incorrect</li>
+					</ul>
+			</ul>
+		<li><i>Note:all dialog boxes should start centered relative to the main window and should block all interactions with the main window</i></li>
+		<li>Tips:
+			<ul>
+				<li>MenuStrip, Form.ShowDialog, ColorDialog, NumericUpDown</li>
+				<li>Graphics.TranslateTransform, Graphics.RotateTransform</li>
+				<li>Control.MouseClick, Control.MouseDown, Control.MouseUp, Control.MouseMove</li>
+				<li>Form.Localizable, CultureInfo.CurrentUICulture</li>
+				<li>OpenFileDialog, SaveFileDialog</li>
+			</ul>
+		</li>
+		<li><i>Note: In all doubtful and untold aspects application should behave like an example app.</i></li>
+	</ul>
+	<ul>
+		<li>Scoring:
+			<ul>
+				<li>Menu bar and creating new project: 1 point</li>
+				<li>Displaying title and author on the front cover: 1 point</li>
+				<li>Displaying title and author on the book's spine: 1 point</li>
+				<li>Changing cover and text color: 1 point</li>
+				<li>Dialog for adding text + text editing on double click: 2 points</li>
+				<li>Selecting, moving and deleting additional texts: 2 points</li>
+				<li>Localization: 2 points</li>
+				<li>Saving and loading the project: 2 points</li>
+				<li><i>Note: It is not possible to obtain points for incomplete functionality.</i></li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>
