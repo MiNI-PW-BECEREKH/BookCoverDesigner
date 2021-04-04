@@ -57,8 +57,8 @@ namespace WinFormsLab
                 case "Position":
                 {
                     Spine =
-                        new Rectangle(new Point(Position.X + Size.Width / 2 - 50 / 2, Position.Y),
-                            new Size(50, Size.Height));
+                        new Rectangle(new Point(Position.X + Size.Width / 2 - SpineWidth / 2, Position.Y),
+                            new Size(SpineWidth, Size.Height));
                     BackCover = new Rectangle(new Point(Position.X, Position.Y),
                         new Size(Size.Width / 2 - Spine.Width / 2, Size.Height));
                     FrontCover =

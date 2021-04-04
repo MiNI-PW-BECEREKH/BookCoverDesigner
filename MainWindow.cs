@@ -33,6 +33,8 @@ namespace WinFormsLab
         {
 
             //Magic Numbers are going to be passed from dialogs
+            //800,600,50 is the default 
+            BookCover.SpineWidth = 50;
             BookCover.Size = new Size(800, 600);
             BookCover.Position = new Point(pictureBox.Width/2 - BookCover.Size.Width / 2, pictureBox.Height/2 - BookCover.Size.Height / 2);
 
@@ -42,17 +44,8 @@ namespace WinFormsLab
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-
-
-            //e.Graphics.DrawRectangle(pen, pictureBox.Width / 4 + 400 / 2 - 25 , pictureBox.Height / 4, 50, 600);
-            //e.Graphics.DrawRectangle(pen, pictureBox.Width / 4 + pictureBox.Width / 4 + 25, pictureBox.Height / 4, pictureBox.Width / 4 - 25, pictureBox.Height / 2);
-                BookCover.Draw(e.Graphics, pictureBox);
-                
-                Font fn = new Font("Arial", 16, FontStyle.Bold);
-                
-
-
-
+            BookCover.Draw(e.Graphics, pictureBox);
+            
             System.GC.Collect();
         }
 
@@ -116,8 +109,11 @@ namespace WinFormsLab
                 {
                     BookCover.Size = new Size(form.DialogData.Width, form.DialogData.Height);
                     BookCover.SpineWidth = form.DialogData.SpineWidth;
+                    BookCover.Position = new Point(pictureBox.Width / 2 - BookCover.Size.Width / 2, pictureBox.Height / 2 - BookCover.Size.Height / 2);
+                    BookCover.TextList.Clear();
                 }
             }
+            pictureBox.Refresh();
         }
     }
 }

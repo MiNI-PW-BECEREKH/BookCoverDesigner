@@ -16,4 +16,4 @@ C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.dll
 C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\ref\WinFormsLab.dll
 C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.pdb
 C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.genruntimeconfig.cache
-C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.NewDialog.resources
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.NewCoverDialogData.resources
