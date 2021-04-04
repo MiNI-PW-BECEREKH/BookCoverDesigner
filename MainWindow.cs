@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,9 @@ namespace WinFormsLab
             //Magic Numbers are going to be passed from dialogs
             BookCover.Size = new Size(800, 600);
             BookCover.Position = new Point(pictureBox.Width/2 - BookCover.Size.Width / 2, pictureBox.Height/2 - BookCover.Size.Height / 2);
-            
+
+            englishToolStripMenuItem.Checked = true;
+
         }
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
@@ -88,5 +91,33 @@ namespace WinFormsLab
             pictureBox.Refresh();
         }
 
+        private void polishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //uncheck all check polish
+            englishToolStripMenuItem.Checked = false;
+            polishToolStripMenuItem.Checked = true;
+
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            polishToolStripMenuItem.Checked = false;
+            englishToolStripMenuItem.Checked = true;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //pop new dialog here 
+            using (NewDialog form = new NewDialog())
+            {
+                form.ShowDialog(this);
+                Debug.WriteLine(form.DialogResult);
+                if (form.DialogResult == DialogResult.OK)
+                {
+                    BookCover.Size = new Size(form.DialogData.Width, form.DialogData.Height);
+                    BookCover.SpineWidth = form.DialogData.SpineWidth;
+                }
+            }
+        }
     }
 }

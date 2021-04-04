@@ -42,6 +42,7 @@ namespace WinFormsLab
         public Rectangle BackCover { get; set; }
         public Rectangle Spine { get; set; }
         public Size Size { get; set; }
+        public int SpineWidth { get; set; }
 
 
         public BookCoverGraphics()
