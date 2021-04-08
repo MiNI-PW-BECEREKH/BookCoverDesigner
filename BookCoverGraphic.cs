@@ -44,6 +44,8 @@ namespace WinFormsLab
         public Size Size { get; set; }
         public int SpineWidth { get; set; }
 
+        public Color Color { get; set; }
+
         public SpineTitleGraphics SpineTitle { get; set; }
         public SpineAuthorGraphics SpineAuthor { get; set; }
 
@@ -62,6 +64,7 @@ namespace WinFormsLab
             FrontCoverAuthor = new FrontCoverAuthorGraphics();
             SpineTitle = new SpineTitleGraphics();
             SpineAuthor = new SpineAuthorGraphics();
+            Color = Color.LightPink;
         }
 
         private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -96,8 +99,11 @@ namespace WinFormsLab
             //g.DrawRectangle(pen, Canvas.Width / 2 - 25, Canvas.Height / 2 - Size.Width / 2, Spine.Width, Spine.Height);
 
             g.DrawRectangle(pen, BackCover);
+            g.FillRectangle(new SolidBrush(Color),BackCover);
             g.DrawRectangle(pen, Spine);
+            g.FillRectangle(new SolidBrush(Color), Spine);
             g.DrawRectangle(pen, FrontCover);
+            g.FillRectangle(new SolidBrush(Color), FrontCover);
             foreach (var item in TextList)
             {
                 item.Draw(g,this);

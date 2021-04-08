@@ -31,7 +31,7 @@ namespace WinFormsLab
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.additionalLabel = new System.Windows.Forms.Label();
             this.authorLabel = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -39,6 +39,12 @@ namespace WinFormsLab
             this.authorTextBox = new System.Windows.Forms.TextBox();
             this.additionalTextTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.colorSettingsLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ChangeTextColorButton = new System.Windows.Forms.Button();
+            this.backgroundColorLabel = new System.Windows.Forms.Label();
+            this.textColorLabel = new System.Windows.Forms.Label();
+            this.changeBackgroundColorButton = new System.Windows.Forms.Button();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +59,7 @@ namespace WinFormsLab
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +78,7 @@ namespace WinFormsLab
             // 
             // splitContainer.Panel2
             // 
-            this.splitContainer.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer.Panel2.Controls.Add(this.tableLayoutPanel);
             this.splitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer.Panel2MinSize = 200;
             this.splitContainer.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -93,30 +100,34 @@ namespace WinFormsLab
             this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
             this.pictureBox.Resize += new System.EventHandler(this.pictureBox_Resize);
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.additionalLabel, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.authorLabel, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.titleLabel, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.titleTextBox, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.authorTextBox, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.additionalTextTextBox, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 6);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(378, 498);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel.ColumnCount = 1;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.Controls.Add(this.additionalLabel, 0, 4);
+            this.tableLayoutPanel.Controls.Add(this.authorLabel, 0, 2);
+            this.tableLayoutPanel.Controls.Add(this.titleLabel, 0, 0);
+            this.tableLayoutPanel.Controls.Add(this.titleTextBox, 0, 1);
+            this.tableLayoutPanel.Controls.Add(this.authorTextBox, 0, 3);
+            this.tableLayoutPanel.Controls.Add(this.additionalTextTextBox, 0, 5);
+            this.tableLayoutPanel.Controls.Add(this.button1, 0, 6);
+            this.tableLayoutPanel.Controls.Add(this.colorSettingsLabel, 0, 7);
+            this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel1, 0, 8);
+            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 9;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.Size = new System.Drawing.Size(378, 600);
+            this.tableLayoutPanel.TabIndex = 0;
             // 
             // additionalLabel
             // 
@@ -194,6 +205,81 @@ namespace WinFormsLab
             this.button1.Text = "Add text";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // colorSettingsLabel
+            // 
+            this.colorSettingsLabel.AutoSize = true;
+            this.colorSettingsLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.colorSettingsLabel.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.colorSettingsLabel.Location = new System.Drawing.Point(3, 469);
+            this.colorSettingsLabel.Name = "colorSettingsLabel";
+            this.colorSettingsLabel.Size = new System.Drawing.Size(372, 20);
+            this.colorSettingsLabel.TabIndex = 7;
+            this.colorSettingsLabel.Text = "Color Settings";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.ChangeTextColorButton, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.backgroundColorLabel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textColorLabel, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.changeBackgroundColorButton, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 492);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(372, 89);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // ChangeTextColorButton
+            // 
+            this.ChangeTextColorButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ChangeTextColorButton.Location = new System.Drawing.Point(231, 52);
+            this.ChangeTextColorButton.Name = "ChangeTextColorButton";
+            this.ChangeTextColorButton.Size = new System.Drawing.Size(94, 29);
+            this.ChangeTextColorButton.TabIndex = 3;
+            this.ChangeTextColorButton.Text = "Change";
+            this.ChangeTextColorButton.UseVisualStyleBackColor = true;
+            this.ChangeTextColorButton.Click += new System.EventHandler(this.ChangeTextColorButton_Click);
+            // 
+            // backgroundColorLabel
+            // 
+            this.backgroundColorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.backgroundColorLabel.AutoSize = true;
+            this.backgroundColorLabel.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.backgroundColorLabel.Location = new System.Drawing.Point(39, 10);
+            this.backgroundColorLabel.Name = "backgroundColorLabel";
+            this.backgroundColorLabel.Size = new System.Drawing.Size(107, 25);
+            this.backgroundColorLabel.TabIndex = 0;
+            this.backgroundColorLabel.Text = "Background";
+            // 
+            // textColorLabel
+            // 
+            this.textColorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textColorLabel.AutoSize = true;
+            this.textColorLabel.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textColorLabel.Location = new System.Drawing.Point(72, 54);
+            this.textColorLabel.Name = "textColorLabel";
+            this.textColorLabel.Size = new System.Drawing.Size(42, 25);
+            this.textColorLabel.TabIndex = 1;
+            this.textColorLabel.Text = "Text";
+            // 
+            // changeBackgroundColorButton
+            // 
+            this.changeBackgroundColorButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.changeBackgroundColorButton.Location = new System.Drawing.Point(231, 8);
+            this.changeBackgroundColorButton.Name = "changeBackgroundColorButton";
+            this.changeBackgroundColorButton.Size = new System.Drawing.Size(94, 29);
+            this.changeBackgroundColorButton.TabIndex = 2;
+            this.changeBackgroundColorButton.Text = "Change";
+            this.changeBackgroundColorButton.UseVisualStyleBackColor = true;
+            this.changeBackgroundColorButton.Click += new System.EventHandler(this.changeBackgroundColorButton_Click);
             // 
             // menuStrip
             // 
@@ -289,6 +375,8 @@ namespace WinFormsLab
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.tableLayoutPanel.ResumeLayout(false);
+            this.tableLayoutPanel.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.menuStrip.ResumeLayout(false);
@@ -302,7 +390,7 @@ namespace WinFormsLab
 
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.PictureBox pictureBox;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label authorLabel;
         private System.Windows.Forms.TextBox titleTextBox;
@@ -319,6 +407,13 @@ namespace WinFormsLab
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem polishToolStripMenuItem;
+        private System.Windows.Forms.Label colorSettingsLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label backgroundColorLabel;
+        private System.Windows.Forms.Label textColorLabel;
+        private System.Windows.Forms.Label textColorChangeLabel;
+        private System.Windows.Forms.Button ChangeTextColorButton;
+        private System.Windows.Forms.Button changeBackgroundColorButton;
     }
 }
 

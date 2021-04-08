@@ -16,6 +16,8 @@ namespace WinFormsLab
         List<StringGraphics> grapics = new List<StringGraphics>();
         String selectedtext = null;
         BookCoverGraphics BookCover = new BookCoverGraphics() ;
+
+        private Color currentTextColor = new Color();
         public MainWindow()
         {
             InitializeComponent();
@@ -71,7 +73,7 @@ namespace WinFormsLab
                 using (Graphics g = pictureBox.CreateGraphics())
                 {
                     Font fn = new Font("Arial", 16, FontStyle.Bold);
-                    BookCover.TextList.Add(new StringGraphics {Font =fn ,Text = selectedtext, Position = new Point(e.X - (int)(g.MeasureString(selectedtext,fn).Width / 2) - BookCover.Position.X, e.Y - (int)(g.MeasureString(selectedtext, fn).Height / 2) - BookCover.Position.Y),Color = Color.Black });
+                    BookCover.TextList.Add(new StringGraphics {Font =fn ,Text = selectedtext, Position = new Point(e.X - (int)(g.MeasureString(selectedtext,fn).Width / 2) - BookCover.Position.X, e.Y - (int)(g.MeasureString(selectedtext, fn).Height / 2) - BookCover.Position.Y),Color = currentTextColor });
                     pictureBox.Refresh();
                     
                 }
@@ -112,6 +114,7 @@ namespace WinFormsLab
                     BookCover.SpineWidth = form.DialogData.SpineWidth;
                     BookCover.Position = new Point(pictureBox.Width / 2 - BookCover.Size.Width / 2, pictureBox.Height / 2 - BookCover.Size.Height / 2);
                     BookCover.TextList.Clear();
+                    BookCover.Color = Color.LightPink;
                 }
             }
             pictureBox.Refresh();
@@ -130,6 +133,40 @@ namespace WinFormsLab
             BookCover.FrontCoverAuthor.Text = authorTextBox.Text;
             pictureBox.Refresh();
 
+        }
+
+        private void changeBackgroundColorButton_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog())
+            { 
+                var Result = colorDialog.ShowDialog(this);
+                if(Result == DialogResult.OK)
+                    BookCover.Color = colorDialog.Color;
+
+            }
+            pictureBox.Refresh();
+        }
+
+        private void ChangeTextColorButton_Click(object sender, EventArgs e)
+        {
+            using(ColorDialog colorDialog = new ColorDialog())
+            {
+                var Result = colorDialog.ShowDialog(this);
+                if (Result == DialogResult.OK)
+                {
+                    BookCover.FrontCoverAuthor.Color = colorDialog.Color;
+                    BookCover.FrontCoverTitle.Color = colorDialog.Color;
+                    BookCover.SpineAuthor.Color = colorDialog.Color;
+                    BookCover.SpineTitle.Color = colorDialog.Color;
+                    foreach (var item in BookCover.TextList)
+                    {
+                        item.Color = colorDialog.Color;
+                    }
+
+                    currentTextColor = colorDialog.Color;
+                }
+            }
+            pictureBox.Refresh();
         }
     }
 }
