@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsLab
-{
+{ 
     public partial class MainWindow : Form
     {
         List<StringGraphics> grapics = new List<StringGraphics>();
         String selectedtext = null;
         BookCoverGraphics BookCover = new BookCoverGraphics() ;
+        public AddTextDialogData TextContext = new AddTextDialogData();
 
         private Color currentTextColor = new Color();
         public MainWindow()
@@ -39,7 +40,7 @@ namespace WinFormsLab
             BookCover.SpineWidth = 50;
             BookCover.Size = new Size(800, 600);
             BookCover.Position = new Point(pictureBox.Width/2 - BookCover.Size.Width / 2, pictureBox.Height/2 - BookCover.Size.Height / 2);
-
+            currentTextColor = Color.Black;
 
             englishToolStripMenuItem.Checked = true;
 
@@ -54,30 +55,51 @@ namespace WinFormsLab
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (additionalTextTextBox.Text == String.Empty)
-                return;
-            else
+            //if (additionalTextTextBox.Text == String.Empty)
+            //    return;
+            //else
+            //{
+            //    pictureBox.Cursor = Cursors.Cross;
+            //    selectedtext = additionalTextTextBox.Text;
+            //}
+            using (AddTextDialog textDialog = new AddTextDialog())
             {
-                pictureBox.Cursor = Cursors.Cross;
-                selectedtext = additionalTextTextBox.Text;
+                textDialog.ShowDialog(this);
+                if (textDialog.DialogResult == DialogResult.OK)
+                {
+                    TextContext = textDialog.DialogData;
+                    pictureBox.Cursor = Cursors.Cross;
+                }
             }
         }
 
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            if (selectedtext != null && pictureBox.Cursor == Cursors.Cross)
+            if (pictureBox.Cursor == Cursors.Cross)
             {
                 pictureBox.Cursor = Cursors.Default;
                 
                 using (Graphics g = pictureBox.CreateGraphics())
                 {
-                    Font fn = new Font("Arial", 16, FontStyle.Bold);
-                    BookCover.TextList.Add(new StringGraphics {Font =fn ,Text = selectedtext, Position = new Point(e.X - (int)(g.MeasureString(selectedtext,fn).Width / 2) - BookCover.Position.X, e.Y - (int)(g.MeasureString(selectedtext, fn).Height / 2) - BookCover.Position.Y),Color = currentTextColor });
+                    Font fn = new Font("Arial", TextContext.FontSize, FontStyle.Bold);
+                    switch (TextContext.TextAlignment)
+                    {
+                        case HorizontalAlignment.Center:
+                            BookCover.TextList.Add(new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(e.X + (int)(g.MeasureString(TextContext.Text, fn).Width / 2) - BookCover.Position.X, e.Y - (int)(g.MeasureString(TextContext.Text, fn).Height / 2) - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment });
+                            break;
+                        case HorizontalAlignment.Left:
+                            BookCover.TextList.Add(new StringGraphics {Font =fn ,Text = TextContext.Text, Position = new Point(e.X - (int)(g.MeasureString(TextContext.Text,fn).Width / 2) - BookCover.Position.X, e.Y - (int)(g.MeasureString(TextContext.Text, fn).Height / 2) - BookCover.Position.Y),Color = currentTextColor,Alignment = TextContext.TextAlignment});
+                            break;
+                        case HorizontalAlignment.Right:
+                            var stringMeasures = (g.MeasureString(TextContext.Text, fn));
+                            BookCover.TextList.Add(new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(e.X - (int)stringMeasures.Width/128  - BookCover.Position.X, e.Y - (int)stringMeasures.Height / 2 - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment });
+                            break;
+                    }
                     pictureBox.Refresh();
                     
                 }
-                additionalTextTextBox.Text = String.Empty;
+                //additionalTextTextBox.Text = String.Empty;
             }
         }
 
@@ -167,6 +189,74 @@ namespace WinFormsLab
                 }
             }
             pictureBox.Refresh();
+        }
+
+        private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            DialogResult result = DialogResult.Cancel;
+            StringGraphics toadd = new StringGraphics();
+            StringGraphics toremove = new StringGraphics();
+            foreach (var item in BookCover.TextList)
+            {
+                using (Graphics g = pictureBox.CreateGraphics())
+                {
+                    Rectangle stringRect = new Rectangle
+                    {
+                        Height = (int) g.MeasureString(item.Text, item.Font).Height,
+                        Width = (int) g.MeasureString(item.Text, item.Font).Width,
+                        X = item.Position.X + BookCover.Position.X, Y = item.Position.Y + BookCover.Position.Y
+                    };
+                    if (item.Alignment == HorizontalAlignment.Center)
+                            stringRect = new Rectangle
+                            {
+                                Height = (int)g.MeasureString(item.Text, item.Font).Height,
+                                Width = (int)g.MeasureString(item.Text, item.Font).Width ,
+                                X = item.Position.X + BookCover.Position.X,
+                                Y = item.Position.Y + BookCover.Position.Y
+                            };
+                    if (e.X < stringRect.Right && e.X + (int)g.MeasureString(item.Text, item.Font).Width >= stringRect.Left && e.Y < stringRect.Bottom &&
+                        e.Y >= stringRect.Top) //check if mouse point is inside the rectangle
+                    {
+                        toremove = item;
+                        using (AddTextDialog textDialog = new AddTextDialog())
+                        {
+                            textDialog.DialogData = new AddTextDialogData
+                                {FontSize = (int) item.Font.Size, Text = item.Text, TextAlignment = item.Alignment};
+                            textDialog.ShowDialog(this);
+                            if (textDialog.DialogResult == DialogResult.OK)
+                            {
+                                result = textDialog.DialogResult;
+                                TextContext = textDialog.DialogData;
+                                Font fn = new Font("Arial", TextContext.FontSize, FontStyle.Bold);
+                                switch (TextContext.TextAlignment)
+                                {
+                                    //positions are wrong & center is not clicking somehow
+                                    case HorizontalAlignment.Center:
+                                        toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(item.Position.X + (int)(g.MeasureString(TextContext.Text, fn).Width / 2) - BookCover.Position.X, item.Position.Y - (int)(g.MeasureString(TextContext.Text, fn).Height / 2) - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment };
+                                        break;
+                                    case HorizontalAlignment.Left:
+                                        toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(item.Position.X - (int)(g.MeasureString(TextContext.Text, fn).Width / 2) - BookCover.Position.X, item.Position.Y - (int)(g.MeasureString(TextContext.Text, fn).Height / 2) - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment };
+                                        break;
+                                    case HorizontalAlignment.Right:
+                                        var stringMeasures = (g.MeasureString(TextContext.Text, fn));
+                                        toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(item.Position.X - (int)stringMeasures.Width / 128 - BookCover.Position.X, item.Position.Y - (int)stringMeasures.Height / 2 - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment };
+                                        break;
+                                }
+                                //BookCover.TextList.Remove(item);
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result == DialogResult.OK)
+            {
+            BookCover.TextList.Remove(toremove);
+            BookCover.TextList.Add(toadd);
+
+            }
+                pictureBox.Refresh();
         }
     }
 }

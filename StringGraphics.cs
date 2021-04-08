@@ -10,12 +10,14 @@ namespace WinFormsLab
         public Font Font { get; set; }
         public Color Color { get; set; }
 
-
+        public HorizontalAlignment Alignment { get; set; }
         public void Draw(Graphics g, object Canvas)
         {
             BookCoverGraphics c = (BookCoverGraphics) Canvas;
             SolidBrush drawBrush = new System.Drawing.SolidBrush(Color);
-            g.DrawString(Text, Font, drawBrush, new PointF(c.Position.X + Position.X , c.Position.Y + Position.Y));
+            StringFormat sf = new StringFormat();
+            sf.Alignment = (StringAlignment)Alignment;
+            g.DrawString(Text, Font, drawBrush, new PointF(c.Position.X + Position.X , c.Position.Y + Position.Y),sf);
         }
 
         //let's do event handling whenever position is set it is set in such a way that string is oriented

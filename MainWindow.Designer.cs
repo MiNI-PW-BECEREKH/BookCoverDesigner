@@ -37,7 +37,6 @@ namespace WinFormsLab
             this.titleLabel = new System.Windows.Forms.Label();
             this.titleTextBox = new System.Windows.Forms.TextBox();
             this.authorTextBox = new System.Windows.Forms.TextBox();
-            this.additionalTextTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.colorSettingsLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -97,6 +96,7 @@ namespace WinFormsLab
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
+            this.pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDoubleClick);
             this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
             this.pictureBox.Resize += new System.EventHandler(this.pictureBox_Resize);
             // 
@@ -109,14 +109,13 @@ namespace WinFormsLab
             this.tableLayoutPanel.Controls.Add(this.titleLabel, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.titleTextBox, 0, 1);
             this.tableLayoutPanel.Controls.Add(this.authorTextBox, 0, 3);
-            this.tableLayoutPanel.Controls.Add(this.additionalTextTextBox, 0, 5);
-            this.tableLayoutPanel.Controls.Add(this.button1, 0, 6);
-            this.tableLayoutPanel.Controls.Add(this.colorSettingsLabel, 0, 7);
-            this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel1, 0, 8);
+            this.tableLayoutPanel.Controls.Add(this.button1, 0, 5);
+            this.tableLayoutPanel.Controls.Add(this.colorSettingsLabel, 0, 6);
+            this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel1, 0, 7);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 9;
+            this.tableLayoutPanel.RowCount = 8;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -125,7 +124,7 @@ namespace WinFormsLab
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(378, 600);
             this.tableLayoutPanel.TabIndex = 0;
             // 
@@ -183,22 +182,11 @@ namespace WinFormsLab
             this.authorTextBox.TabIndex = 3;
             this.authorTextBox.TextChanged += new System.EventHandler(this.authorTextBox_TextChanged);
             // 
-            // additionalTextTextBox
-            // 
-            this.additionalTextTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.additionalTextTextBox.Location = new System.Drawing.Point(3, 159);
-            this.additionalTextTextBox.Multiline = true;
-            this.additionalTextTextBox.Name = "additionalTextTextBox";
-            this.additionalTextTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.additionalTextTextBox.Size = new System.Drawing.Size(372, 272);
-            this.additionalTextTextBox.TabIndex = 5;
-            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(3, 437);
+            this.button1.Location = new System.Drawing.Point(3, 159);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(372, 29);
             this.button1.TabIndex = 6;
@@ -211,7 +199,7 @@ namespace WinFormsLab
             this.colorSettingsLabel.AutoSize = true;
             this.colorSettingsLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.colorSettingsLabel.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.colorSettingsLabel.Location = new System.Drawing.Point(3, 469);
+            this.colorSettingsLabel.Location = new System.Drawing.Point(3, 191);
             this.colorSettingsLabel.Name = "colorSettingsLabel";
             this.colorSettingsLabel.Size = new System.Drawing.Size(372, 20);
             this.colorSettingsLabel.TabIndex = 7;
@@ -229,7 +217,7 @@ namespace WinFormsLab
             this.tableLayoutPanel1.Controls.Add(this.backgroundColorLabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.textColorLabel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.changeBackgroundColorButton, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 492);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 214);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -396,7 +384,6 @@ namespace WinFormsLab
         private System.Windows.Forms.TextBox titleTextBox;
         private System.Windows.Forms.Label additionalLabel;
         private System.Windows.Forms.TextBox authorTextBox;
-        private System.Windows.Forms.TextBox additionalTextTextBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

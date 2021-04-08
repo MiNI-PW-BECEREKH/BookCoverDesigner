@@ -108,7 +108,7 @@ namespace WinFormsLab
             {
                 //something erased
                 var fsize = Font.Size;
-                Font = new Font("Arial", fsize - (g.MeasureString(Text, Font).Width - c.Width) / Text.Length);
+                Font = new Font("Arial", Math.Abs(fsize - (g.MeasureString(Text, Font).Width - c.Width) / Text.Length));
             }
             else if ((int)g.MeasureString(Text, Font).Width < TextSize.Width && (int)g.MeasureString(Text, Font).Width < c.Width && Text != "")
             {
