@@ -36,7 +36,7 @@ namespace WinFormsLab
             this.authorLabel = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
             this.titleTextBox = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.authorTextBox = new System.Windows.Forms.TextBox();
             this.additionalTextTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -101,7 +101,7 @@ namespace WinFormsLab
             this.tableLayoutPanel1.Controls.Add(this.authorLabel, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.titleLabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.titleTextBox, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.authorTextBox, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.additionalTextTextBox, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -160,15 +160,17 @@ namespace WinFormsLab
             this.titleTextBox.Name = "titleTextBox";
             this.titleTextBox.Size = new System.Drawing.Size(372, 57);
             this.titleTextBox.TabIndex = 1;
+            this.titleTextBox.TextChanged += new System.EventHandler(this.titleTextBox_TextChanged);
             // 
-            // textBox1
+            // authorTextBox
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.authorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(3, 106);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(372, 27);
-            this.textBox1.TabIndex = 3;
+            this.authorTextBox.Location = new System.Drawing.Point(3, 106);
+            this.authorTextBox.Name = "authorTextBox";
+            this.authorTextBox.Size = new System.Drawing.Size(372, 27);
+            this.authorTextBox.TabIndex = 3;
+            this.authorTextBox.TextChanged += new System.EventHandler(this.authorTextBox_TextChanged);
             // 
             // additionalTextTextBox
             // 
@@ -305,7 +307,7 @@ namespace WinFormsLab
         private System.Windows.Forms.Label authorLabel;
         private System.Windows.Forms.TextBox titleTextBox;
         private System.Windows.Forms.Label additionalLabel;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox authorTextBox;
         private System.Windows.Forms.TextBox additionalTextTextBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.MenuStrip menuStrip;

@@ -44,10 +44,24 @@ namespace WinFormsLab
         public Size Size { get; set; }
         public int SpineWidth { get; set; }
 
+        public SpineTitleGraphics SpineTitle { get; set; }
+        public SpineAuthorGraphics SpineAuthor { get; set; }
+
+        public FrontCoverAuthorGraphics FrontCoverAuthor { get; set; }
+        public FrontCoverTitleGraphics FrontCoverTitle { get; set; }
+
+        //we could have 2 different classes for drawing on the spine and drawing on the frontcover
+
+
 
         public BookCoverGraphics()
         {
             PropertyChanged += OnPropertyChanged;
+            //INitialize author with necessary things
+            FrontCoverTitle = new FrontCoverTitleGraphics();
+            FrontCoverAuthor = new FrontCoverAuthorGraphics();
+            SpineTitle = new SpineTitleGraphics();
+            SpineAuthor = new SpineAuthorGraphics();
         }
 
         private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -88,6 +102,12 @@ namespace WinFormsLab
             {
                 item.Draw(g,this);
             }
+            FrontCoverTitle.Draw(g,FrontCover);
+            FrontCoverAuthor.Draw(g,FrontCover);
+            SpineTitle.Draw(g,Spine);
+            SpineAuthor.Draw(g,Spine);
+
+
         }
 
     }

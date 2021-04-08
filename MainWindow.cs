@@ -38,6 +38,7 @@ namespace WinFormsLab
             BookCover.Size = new Size(800, 600);
             BookCover.Position = new Point(pictureBox.Width/2 - BookCover.Size.Width / 2, pictureBox.Height/2 - BookCover.Size.Height / 2);
 
+
             englishToolStripMenuItem.Checked = true;
 
         }
@@ -114,6 +115,21 @@ namespace WinFormsLab
                 }
             }
             pictureBox.Refresh();
+        }
+
+        private void titleTextBox_TextChanged(object sender, EventArgs e)
+        {
+            BookCover.SpineTitle.Text = titleTextBox.Text;
+            BookCover.FrontCoverTitle.Text = titleTextBox.Text;
+            pictureBox.Refresh();
+        }
+
+        private void authorTextBox_TextChanged(object sender, EventArgs e)
+        {
+            BookCover.SpineAuthor.Text = authorTextBox.Text;
+            BookCover.FrontCoverAuthor.Text = authorTextBox.Text;
+            pictureBox.Refresh();
+
         }
     }
 }
