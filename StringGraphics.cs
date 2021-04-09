@@ -10,13 +10,13 @@ namespace WinFormsLab
         public Font Font { get; set; }
         public Color Color { get; set; }
 
-        public HorizontalAlignment Alignment { get; set; }
+        public StringAlignment Alignment { get; set; }
         public void Draw(Graphics g, object Canvas)
         {
             BookCoverGraphics c = (BookCoverGraphics) Canvas;
             SolidBrush drawBrush = new System.Drawing.SolidBrush(Color);
             StringFormat sf = new StringFormat();
-            sf.Alignment = (StringAlignment)Alignment;
+            sf.Alignment = Alignment;
             g.DrawString(Text, Font, drawBrush, new PointF(c.Position.X + Position.X , c.Position.Y + Position.Y),sf);
         }
 

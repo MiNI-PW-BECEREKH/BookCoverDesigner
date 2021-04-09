@@ -12,7 +12,7 @@ namespace WinFormsLab
 {
     public class AddTextDialogData
     {
-        public HorizontalAlignment TextAlignment { get; set; }
+        public StringAlignment TextAlignment { get; set; }
         public string Text { get; set; }
         public int FontSize { get; set; }
 
@@ -54,13 +54,13 @@ namespace WinFormsLab
                 addTextTextBox.Text = DialogData.Text;
                 switch (DialogData.TextAlignment)
                 {
-                    case HorizontalAlignment.Center:
+                    case StringAlignment.Center:
                         centerRadioButton.Checked = true;
                         break;
-                    case HorizontalAlignment.Left:
+                    case StringAlignment.Near:
                         leftRadioButton.Checked = true;
                         break;
-                    case HorizontalAlignment.Right:
+                    case StringAlignment.Far:
                         rightRadioButton.Checked = true;
                         break;
                     
@@ -74,7 +74,19 @@ namespace WinFormsLab
             //Initialize data to public member;
             DialogData.Text = addTextTextBox.Text;
             DialogData.FontSize = (int)fontSizeNumericUpDown.Value;
-            DialogData.TextAlignment = addTextTextBox.TextAlign;
+            switch (addTextTextBox.TextAlign)
+            {
+                case HorizontalAlignment.Center:
+                    DialogData.TextAlignment = StringAlignment.Center;
+                    break;
+                case HorizontalAlignment.Left:
+                    DialogData.TextAlignment = StringAlignment.Near;
+                    break;
+                case HorizontalAlignment.Right:
+                    DialogData.TextAlignment = StringAlignment.Far;
+                    break;
+            }
+            //DialogData.TextAlignment = (StringAlignment)addTextTextBox.TextAlign;
 
             Close();
         }
