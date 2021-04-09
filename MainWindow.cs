@@ -259,6 +259,7 @@ namespace WinFormsLab
                                     case StringAlignment.Near:
                                        toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(stringRect.X - (-stringRect.Width + (int)(g.MeasureString(TextContext.Text, fn).Width))/2 - BookCover.Position.X, stringRect.Y  /*(int)(g.MeasureString(TextContext.Text, fn).Height )*/ - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment }; break;
                                     case StringAlignment.Far:
+                                        //this is problematic ?? others work as it should be 
                                         var stringMeasures = (g.MeasureString(TextContext.Text, fn));
                                         var diff = (int)Math.Abs(g.MeasureString(TextContext.Text, fn).Width - stringRect.Width / 2);
                                         if (stringRect.Width > stringMeasures.Width)
@@ -268,7 +269,7 @@ namespace WinFormsLab
                                             Font = fn, Text = TextContext.Text,
 
                                             Position = new Point(
-                                                stringRect.X + diff -
+                                                stringRect.X + diff  -
                                                 BookCover.Position.X,
                                                 stringRect.Y /*- (int) stringMeasures.Height / 2*/ - BookCover.Position.Y),
                                             Color = currentTextColor, Alignment = TextContext.TextAlignment
