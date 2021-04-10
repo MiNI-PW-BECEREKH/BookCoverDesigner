@@ -10,14 +10,6 @@ using System.Windows.Forms;
 
 namespace WinFormsLab
 {
-    public class AddTextDialogData
-    {
-        public StringAlignment TextAlignment { get; set; }
-        public string Text { get; set; }
-        public int FontSize { get; set; }
-
-    }
-
     public partial class AddTextDialog : Form
     {
         public AddTextDialogData DialogData = new AddTextDialogData();
@@ -30,7 +22,7 @@ namespace WinFormsLab
         {
             var checkedButton = tableLayoutPanel4.Controls.OfType<RadioButton>()
                 .FirstOrDefault(r => r.Checked);
-            switch (checkedButton.Text)
+            switch (checkedButton.Tag.ToString())
             {
                 case "Left":
                     addTextTextBox.TextAlign = HorizontalAlignment.Left;

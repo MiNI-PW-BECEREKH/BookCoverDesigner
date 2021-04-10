@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace WinFormsLab
         String selectedtext = null;
         BookCoverGraphics BookCover = new BookCoverGraphics() ;
         public AddTextDialogData TextContext = new AddTextDialogData();
+        private Rectangle ContextRectangle = new Rectangle();
+        private StringGraphics toModify = (StringGraphics)null;
 
         private Color currentTextColor = new Color();
         public MainWindow()
@@ -34,7 +37,17 @@ namespace WinFormsLab
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;
+            this.KeyUp += OnKeyUp;
 
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.UserPaint |
+                          ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.ResizeRedraw |
+                          ControlStyles.ContainerControl |
+                          ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.SupportsTransparentBackColor
+                , true);
             //Magic Numbers are going to be passed from dialogs
             //800,600,50 is the default 
             BookCover.SpineWidth = 50;
@@ -43,13 +56,26 @@ namespace WinFormsLab
             currentTextColor = Color.Black;
 
             englishToolStripMenuItem.Checked = true;
+            ChangeLanguage("en");
 
         }
 
+        private void OnKeyUp(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && toModify != null)
+            {
+                BookCover.TextList.Remove(toModify);
+                ContextRectangle = new Rectangle();
+                pictureBox.Refresh();
+            }
+        }
+
+
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
+
             BookCover.Draw(e.Graphics, pictureBox);
-            
+            e.Graphics.DrawRectangle(new Pen(Color.FromArgb(255, 255 - BookCover.Color.R, 255 - BookCover.Color.G, 255 - BookCover.Color.B)), ContextRectangle);
             System.GC.Collect();
         }
 
@@ -109,17 +135,19 @@ namespace WinFormsLab
             pictureBox.Refresh();
         }
 
-        private void polishToolStripMenuItem_Click(object sender, EventArgs e)
+        private void turkishToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //uncheck all check polish
+            ChangeLanguage("tr");
             englishToolStripMenuItem.Checked = false;
-            polishToolStripMenuItem.Checked = true;
+            turkishToolStripMenuItem.Checked = true;
 
         }
 
         private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            polishToolStripMenuItem.Checked = false;
+            ChangeLanguage("en");
+            turkishToolStripMenuItem.Checked = false;
             englishToolStripMenuItem.Checked = true;
         }
 
@@ -231,12 +259,11 @@ namespace WinFormsLab
                             };
                             break;
                     }
+                        
 
-                    
-                    if (e.X < stringRect.Right && e.X  >= stringRect.Left && e.Y < stringRect.Bottom &&
-                        e.Y >= stringRect.Top) //check if mouse point is inside the rectangle
+                    if (stringRect.Contains(e.Location)) //check if mouse point is inside the rectangle
                     {
-                        g.DrawRectangle(new Pen(Color.Black), stringRect);
+                        g.DrawRectangle(new Pen(Color.FromArgb(255,255 - BookCover.Color.R, 255 - BookCover.Color.G, 255 - BookCover.Color.B)), stringRect);
                         toremove = item;
                         using (AddTextDialog textDialog = new AddTextDialog())
                         {
@@ -257,22 +284,20 @@ namespace WinFormsLab
                                         toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(stringRect.X + (int)stringMeasuresC.Width/2  - BookCover.Position.X, stringRect.Y /*- (int)stringMeasures.Height / 2 */- BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment };
                                         break;
                                     case StringAlignment.Near:
-                                       toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(stringRect.X - (-stringRect.Width + (int)(g.MeasureString(TextContext.Text, fn).Width))/2 - BookCover.Position.X, stringRect.Y  /*(int)(g.MeasureString(TextContext.Text, fn).Height )*/ - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment }; break;
+                                       toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point((stringRect.X + (int)(g.MeasureString(TextContext.Text, fn).Width)) - BookCover.Position.X, stringRect.Y  /*(int)(g.MeasureString(TextContext.Text, fn).Height )*/ - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment }; break;
                                     case StringAlignment.Far:
-                                        //this is problematic ?? others work as it should be 
-                                        var stringMeasures = (g.MeasureString(TextContext.Text, fn));
-                                        var diff = (int)Math.Abs(g.MeasureString(TextContext.Text, fn).Width - stringRect.Width / 2);
-                                        if (stringRect.Width > stringMeasures.Width)
-                                            diff = (int)Math.Abs(g.MeasureString(TextContext.Text, fn).Width + stringRect.Width/4 );
+
                                         toadd = new StringGraphics
                                         {
-                                            Font = fn, Text = TextContext.Text,
+                                            Font = fn,
+                                            Text = TextContext.Text,
 
                                             Position = new Point(
-                                                stringRect.X + diff  -
+                                                stringRect.X + stringRect.Width/2  + g.MeasureString(TextContext.Text, fn).ToSize().Width / 2 -
                                                 BookCover.Position.X,
                                                 stringRect.Y /*- (int) stringMeasures.Height / 2*/ - BookCover.Position.Y),
-                                            Color = currentTextColor, Alignment = TextContext.TextAlignment
+                                            Color = currentTextColor,
+                                            Alignment = TextContext.TextAlignment
                                         };
                                         break;
                                 }
@@ -292,5 +317,127 @@ namespace WinFormsLab
             }
                 pictureBox.Refresh();
         }
+
+        private void pictureBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Right) != 0)
+            {
+                foreach (var item in BookCover.TextList)
+                {
+                    using (Graphics g = pictureBox.CreateGraphics())
+                    {
+                        Rectangle stringRect = new Rectangle();
+                        switch (item.Alignment)
+                        {
+                            case StringAlignment.Center:
+                                stringRect = new Rectangle
+                                {
+                                    Height = (int) g.MeasureString(item.Text, item.Font).Height,
+                                    Width = (int) g.MeasureString(item.Text, item.Font).Width,
+                                    X = item.Position.X + BookCover.Position.X -
+                                        (int) g.MeasureString(item.Text, item.Font).Width / 2,
+                                    Y = item.Position.Y + BookCover.Position.Y
+                                };
+                                break;
+                            case StringAlignment.Near:
+                                stringRect = new Rectangle
+                                {
+                                    Height = (int) g.MeasureString(item.Text, item.Font).Height,
+                                    Width = (int) g.MeasureString(item.Text, item.Font).Width,
+                                    X = item.Position.X + BookCover.Position.X,
+                                    Y = item.Position.Y + BookCover.Position.Y
+                                };
+                                break;
+                            case StringAlignment.Far:
+                                stringRect = new Rectangle
+                                {
+                                    Height = (int) g.MeasureString(item.Text, item.Font).Height,
+                                    Width = (int) g.MeasureString(item.Text, item.Font).Width,
+                                    X = item.Position.X + BookCover.Position.X -
+                                        (int) g.MeasureString(item.Text, item.Font).Width,
+                                    Y = item.Position.Y + BookCover.Position.Y
+                                };
+                                break;
+                        }
+
+
+                        if (e.X < stringRect.Right && e.X >= stringRect.Left && e.Y < stringRect.Bottom &&
+                            e.Y >= stringRect.Top) //check if mouse point is inside the rectangle
+                        {
+                            ContextRectangle = stringRect;
+                            toModify = item;
+                            pictureBox.Refresh();
+                            return;
+
+                        }
+                        else
+                        {
+                            ContextRectangle = new Rectangle();
+                            toModify = (StringGraphics) null;
+                            pictureBox.Refresh();
+                            
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Middle) != 0 && toModify != null)
+            {
+                toModify.Position = new Point(e.X - BookCover.Position.X, e.Y - BookCover.Position.Y);
+                using (Graphics g = pictureBox.CreateGraphics())
+                {
+
+                    switch (toModify.Alignment)
+                    {
+                        case StringAlignment.Center:
+                            ContextRectangle = new Rectangle
+                            {
+                                Height = (int)g.MeasureString(toModify.Text, toModify.Font).Height,
+                                Width = (int)g.MeasureString(toModify.Text, toModify.Font).Width,
+                                X = toModify.Position.X + BookCover.Position.X - (int)g.MeasureString(toModify.Text, toModify.Font).Width / 2,
+                                Y = toModify.Position.Y + BookCover.Position.Y
+                            };
+                            break;
+                        case StringAlignment.Near:
+                            ContextRectangle = new Rectangle
+                            {
+                                Height = (int)g.MeasureString(toModify.Text, toModify.Font).Height,
+                                Width = (int)g.MeasureString(toModify.Text, toModify.Font).Width,
+                                X = toModify.Position.X + BookCover.Position.X,
+                                Y = toModify.Position.Y + BookCover.Position.Y
+                            };
+                            break;
+                        case StringAlignment.Far:
+                            ContextRectangle = new Rectangle
+                            {
+                                Height = (int)g.MeasureString(toModify.Text, toModify.Font).Height,
+                                Width = (int)g.MeasureString(toModify.Text, toModify.Font).Width,
+                                X = toModify.Position.X + BookCover.Position.X - (int)g.MeasureString(toModify.Text, toModify.Font).Width,
+                                Y = toModify.Position.Y + BookCover.Position.Y
+                            };
+                            break;
+                            
+                    }
+                    
+
+                }
+
+
+
+            }
+                pictureBox.Refresh();
+        }
+
+        private void ChangeLanguage(string language)
+        {
+            CultureInfo.CurrentUICulture = new CultureInfo(language);
+            Controls.Clear();
+            InitializeComponent();
+        }
+
     }
 }

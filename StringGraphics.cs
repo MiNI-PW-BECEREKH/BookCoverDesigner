@@ -18,6 +18,7 @@ namespace WinFormsLab
             StringFormat sf = new StringFormat();
             sf.Alignment = Alignment;
             g.DrawString(Text, Font, drawBrush, new PointF(c.Position.X + Position.X , c.Position.Y + Position.Y),sf);
+            g.DrawEllipse(new Pen(Color),c.Position.X + Position.X -1, c.Position.Y + Position.Y -1 ,1,1);
         }
 
         //let's do event handling whenever position is set it is set in such a way that string is oriented

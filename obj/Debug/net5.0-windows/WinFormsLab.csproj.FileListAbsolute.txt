@@ -16,5 +16,13 @@ C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.dll
 C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\ref\WinFormsLab.dll
 C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.pdb
 C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.genruntimeconfig.cache
-C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.NewCoverDialogData.resources
-C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.AddTextDialogData.resources
+C:\Users\suhey\Desktop\WinFormsLab\bin\Debug\net5.0-windows\tr\WinFormsLab.resources.dll
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.MainWindow.tr.resources
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\tr\WinFormsLab.resources.dll
+C:\Users\suhey\Desktop\WinFormsLab\bin\Debug\net5.0-windows\en\WinFormsLab.resources.dll
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.MainWindow.en.resources
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\en\WinFormsLab.resources.dll
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.AddTextDialog.resources
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.AddTextDialog.tr.resources
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.NewDialog.resources
+C:\Users\suhey\Desktop\WinFormsLab\obj\Debug\net5.0-windows\WinFormsLab.NewDialog.tr.resources

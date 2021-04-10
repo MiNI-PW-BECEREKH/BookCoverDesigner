@@ -10,12 +10,6 @@ using System.Windows.Forms;
 
 namespace WinFormsLab
 {
-    public class NewCoverDialogData
-    {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int SpineWidth { get; set; }
-    }
     public partial class NewDialog : Form
     {
         public NewCoverDialogData DialogData = new NewCoverDialogData();

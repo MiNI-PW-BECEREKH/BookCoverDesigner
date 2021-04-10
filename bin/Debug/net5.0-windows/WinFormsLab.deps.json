@@ -9,6 +9,14 @@
       "WinFormsLab/1.0.0": {
         "runtime": {
           "WinFormsLab.dll": {}
+        },
+        "resources": {
+          "tr/WinFormsLab.resources.dll": {
+            "locale": "tr"
+          },
+          "en/WinFormsLab.resources.dll": {
+            "locale": "en"
+          }
         }
       }
     }
