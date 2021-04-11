@@ -20,6 +20,7 @@ namespace WinFormsLab
         public AddTextDialogData TextContext = new AddTextDialogData();
         private Rectangle ContextRectangle = new Rectangle();
         private StringGraphics toModify = (StringGraphics)null;
+        private Size MouseFirstClickOffset{ get; set; }
 
         private Color currentTextColor = new Color();
         public MainWindow()
@@ -57,6 +58,8 @@ namespace WinFormsLab
 
             englishToolStripMenuItem.Checked = true;
             ChangeLanguage("en");
+
+            
 
         }
 
@@ -320,6 +323,8 @@ namespace WinFormsLab
 
         private void pictureBox_MouseClick(object sender, MouseEventArgs e)
         {
+            if((e.Button & MouseButtons.Middle) != 0 && toModify != null)
+                MouseFirstClickOffset = new Size(e.X - ContextRectangle.X,e.Y - ContextRectangle.Y);
             if ((e.Button & MouseButtons.Right) != 0)
             {
                 foreach (var item in BookCover.TextList)
@@ -364,6 +369,7 @@ namespace WinFormsLab
                         if (e.X < stringRect.Right && e.X >= stringRect.Left && e.Y < stringRect.Bottom &&
                             e.Y >= stringRect.Top) //check if mouse point is inside the rectangle
                         {
+                            
                             ContextRectangle = stringRect;
                             toModify = item;
                             pictureBox.Refresh();
@@ -383,60 +389,44 @@ namespace WinFormsLab
 
         }
 
+        private Point prevLocation { get; set; }
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             if ((e.Button & MouseButtons.Middle) != 0 && toModify != null)
             {
-                toModify.Position = new Point(e.X - BookCover.Position.X, e.Y - BookCover.Position.Y);
                 using (Graphics g = pictureBox.CreateGraphics())
                 {
 
-                    switch (toModify.Alignment)
-                    {
-                        case StringAlignment.Center:
-                            ContextRectangle = new Rectangle
-                            {
-                                Height = (int)g.MeasureString(toModify.Text, toModify.Font).Height,
-                                Width = (int)g.MeasureString(toModify.Text, toModify.Font).Width,
-                                X = toModify.Position.X + BookCover.Position.X - (int)g.MeasureString(toModify.Text, toModify.Font).Width / 2,
-                                Y = toModify.Position.Y + BookCover.Position.Y
-                            };
-                            break;
-                        case StringAlignment.Near:
-                            ContextRectangle = new Rectangle
-                            {
-                                Height = (int)g.MeasureString(toModify.Text, toModify.Font).Height,
-                                Width = (int)g.MeasureString(toModify.Text, toModify.Font).Width,
-                                X = toModify.Position.X + BookCover.Position.X,
-                                Y = toModify.Position.Y + BookCover.Position.Y
-                            };
-                            break;
-                        case StringAlignment.Far:
-                            ContextRectangle = new Rectangle
-                            {
-                                Height = (int)g.MeasureString(toModify.Text, toModify.Font).Height,
-                                Width = (int)g.MeasureString(toModify.Text, toModify.Font).Width,
-                                X = toModify.Position.X + BookCover.Position.X - (int)g.MeasureString(toModify.Text, toModify.Font).Width,
-                                Y = toModify.Position.Y + BookCover.Position.Y
-                            };
-                            break;
-                            
-                    }
+ 
+                    //we need to get differenc between ContextRectangle and mouse position then add it to toModify position
+                    Size offSize = new Size(e.X - ContextRectangle.X, e.Y - ContextRectangle.Y);
+                    //g.DrawEllipse(new Pen(Color.Black),ContextRectangle.X-5,ContextRectangle.Y-5,5,5);
+                    toModify.Position = new Point(toModify.Position.X -MouseFirstClickOffset.Width + offSize.Width , toModify.Position.Y - MouseFirstClickOffset.Height + offSize.Height );
+                    ContextRectangle.Location = new Point(ContextRectangle.X + offSize.Width,
+                        ContextRectangle.Y + offSize.Height);
+                    
                     
 
+
+                pictureBox.Refresh();
                 }
 
 
-
+                prevLocation = e.Location;
             }
-                pictureBox.Refresh();
         }
 
         private void ChangeLanguage(string language)
         {
             CultureInfo.CurrentUICulture = new CultureInfo(language);
             Controls.Clear();
+            var size = splitContainer.Panel1.Size;
+            var mSize = Size;
+            var location = Location;
             InitializeComponent();
+            Size = mSize;
+            Location = location;
+            splitContainer.SplitterDistance = size.Width;
         }
 
     }

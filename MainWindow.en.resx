@@ -57,58 +57,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Add Text</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
   <data name="turkishToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Turkish</value>
   </data>
-	<data name="$this.Text" xml:space="preserve">
-		<value>Book Cover Designer</value>
-	</data>
-	<data name="button1.Text" xml:space="preserve">
-		<value>Add Text</value>
-	</data>
-	<data name="backgroundColorLabel.Text" xml:space="preserve">
-		<value>Background</value>
-	</data>
-	<data name="authorLabel.Text" xml:space="preserve">
-		<value>Author</value>
-	</data>
-	<data name="additionalLabel.Text" xml:space="preserve">
-		<value>Additional Text</value>
-	</data>
-	<data name="changeBackgroundColorButton.Text" xml:space="preserve">
-		<value>Change</value>
-	</data>
-	<data name="ChangeTextColorButton.Text" xml:space="preserve">
-		<value>Change</value>
-	</data>
-	<data name="colorSettingsLabel.Text" xml:space="preserve">
-		<value>Color Settings</value>
-	</data>
-	<data name="englishToolStripMenuItem.Text" xml:space="preserve">
-		<value>&amp;English</value>
-	</data>
-	<data name="fileToolStripMenuItem.Text" xml:space="preserve">
-		<value>File</value>
-	</data>
-	<data name="languageToolStripMenuItem.Text" xml:space="preserve">
-		<value>&amp;Language</value>
-	</data>
-	<data name="newToolStripMenuItem.Text" xml:space="preserve">
-		<value>&amp;New</value>
-	</data>
-	<data name="openToolStripMenuItem.Text" xml:space="preserve">
-		<value>&amp;Open</value>
-	</data>
-	<data name="saveToolStripMenuItem.Text" xml:space="preserve">
-		<value>&amp;Save</value>
-	</data>
-	<data name="settingsToolStripMenuItem.Text" xml:space="preserve">
-		<value>&amp;Settings</value>
-	</data>
-	<data name="textColorLabel.Text" xml:space="preserve">
-		<value>Text</value>
-	</data>
-	<data name="titleLabel.Text" xml:space="preserve">
-		<value>Title</value>
-	</data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Book Cover Designer</value>
+  </data>
 </root>
