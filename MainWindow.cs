@@ -16,8 +16,6 @@ namespace WinFormsLab
 { 
     public partial class MainWindow : Form
     {
-        List<StringGraphics> grapics = new List<StringGraphics>();
-        String selectedtext = null;
         BookCoverGraphics BookCover = new BookCoverGraphics() ;
         public AddTextDialogData TextContext = new AddTextDialogData();
         private Rectangle ContextRectangle = new Rectangle();
@@ -233,101 +231,104 @@ namespace WinFormsLab
 
         private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            DialogResult result = DialogResult.Cancel;
-            StringGraphics toadd = new StringGraphics();
-            StringGraphics toremove = new StringGraphics();
-            foreach (var item in BookCover.TextList)
+            if ((e.Button & MouseButtons.Left) != 0)
             {
-                using (Graphics g = pictureBox.CreateGraphics())
+                DialogResult result = DialogResult.Cancel;
+                StringGraphics toadd = new StringGraphics();
+                StringGraphics toremove = new StringGraphics();
+                foreach (var item in BookCover.TextList)
                 {
-                    Rectangle stringRect = new Rectangle();
-                    switch (item.Alignment)
+                    using (Graphics g = pictureBox.CreateGraphics())
                     {
-                        case StringAlignment.Center:
-                            stringRect = new Rectangle
-                            {
-                                Height = (int)g.MeasureString(item.Text, item.Font).Height,
-                                Width = (int)g.MeasureString(item.Text, item.Font).Width,
-                                X = item.Position.X + BookCover.Position.X - (int)g.MeasureString(item.Text, item.Font).Width/2,
-                                Y = item.Position.Y + BookCover.Position.Y
-                            };
-                            break;
-                        case StringAlignment.Near:
-                            stringRect = new Rectangle
-                            {
-                                Height = (int)g.MeasureString(item.Text, item.Font).Height,
-                                Width = (int)g.MeasureString(item.Text, item.Font).Width,
-                                X = item.Position.X + BookCover.Position.X,
-                                Y = item.Position.Y + BookCover.Position.Y
-                            };
-                            break;
-                        case StringAlignment.Far:
-                            stringRect = new Rectangle
-                            {
-                                Height = (int)g.MeasureString(item.Text, item.Font).Height,
-                                Width = (int)g.MeasureString(item.Text, item.Font).Width,
-                                X = item.Position.X + BookCover.Position.X - (int)g.MeasureString(item.Text, item.Font).Width,
-                                Y = item.Position.Y + BookCover.Position.Y
-                            };
-                            break;
-                    }
-                        
-
-                    if (stringRect.Contains(e.Location)) //check if mouse point is inside the rectangle
-                    {
-                        g.DrawRectangle(new Pen(Color.FromArgb(255,255 - BookCover.Color.R, 255 - BookCover.Color.G, 255 - BookCover.Color.B)), stringRect);
-                        toremove = item;
-                        using (AddTextDialog textDialog = new AddTextDialog())
+                        Rectangle stringRect = new Rectangle();
+                        switch (item.Alignment)
                         {
-                            textDialog.DialogData = new AddTextDialogData
-                                {FontSize = (int) item.Font.Size, Text = item.Text, TextAlignment = item.Alignment};
-                            textDialog.ShowDialog(this);
-                            if (textDialog.DialogResult == DialogResult.OK)
-                            {
-                                result = textDialog.DialogResult;
-                                TextContext = textDialog.DialogData;
-                                Font fn = new Font("Arial", TextContext.FontSize, FontStyle.Bold);
-                                switch (TextContext.TextAlignment)
+                            case StringAlignment.Center:
+                                stringRect = new Rectangle
                                 {
-                                    //when text is changed it is a little of off center
-                                    case StringAlignment.Center:
-                                        var stringMeasuresC = (g.MeasureString(toremove.Text, fn));
-                                        //could be better
-                                        toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(stringRect.X + (int)stringMeasuresC.Width/2  - BookCover.Position.X, stringRect.Y /*- (int)stringMeasures.Height / 2 */- BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment };
-                                        break;
-                                    case StringAlignment.Near:
-                                       toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point((stringRect.X + (int)(g.MeasureString(TextContext.Text, fn).Width)) - BookCover.Position.X, stringRect.Y  /*(int)(g.MeasureString(TextContext.Text, fn).Height )*/ - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment }; break;
-                                    case StringAlignment.Far:
+                                    Height = (int)g.MeasureString(item.Text, item.Font).Height,
+                                    Width = (int)g.MeasureString(item.Text, item.Font).Width,
+                                    X = item.Position.X + BookCover.Position.X - (int)g.MeasureString(item.Text, item.Font).Width / 2,
+                                    Y = item.Position.Y + BookCover.Position.Y
+                                };
+                                break;
+                            case StringAlignment.Near:
+                                stringRect = new Rectangle
+                                {
+                                    Height = (int)g.MeasureString(item.Text, item.Font).Height,
+                                    Width = (int)g.MeasureString(item.Text, item.Font).Width,
+                                    X = item.Position.X + BookCover.Position.X,
+                                    Y = item.Position.Y + BookCover.Position.Y
+                                };
+                                break;
+                            case StringAlignment.Far:
+                                stringRect = new Rectangle
+                                {
+                                    Height = (int)g.MeasureString(item.Text, item.Font).Height,
+                                    Width = (int)g.MeasureString(item.Text, item.Font).Width,
+                                    X = item.Position.X + BookCover.Position.X - (int)g.MeasureString(item.Text, item.Font).Width,
+                                    Y = item.Position.Y + BookCover.Position.Y
+                                };
+                                break;
+                        }
 
-                                        toadd = new StringGraphics
-                                        {
-                                            Font = fn,
-                                            Text = TextContext.Text,
 
-                                            Position = new Point(
-                                                stringRect.X + stringRect.Width/2  + g.MeasureString(TextContext.Text, fn).ToSize().Width / 2 -
-                                                BookCover.Position.X,
-                                                stringRect.Y /*- (int) stringMeasures.Height / 2*/ - BookCover.Position.Y),
-                                            Color = currentTextColor,
-                                            Alignment = TextContext.TextAlignment
-                                        };
-                                        break;
+                        if (stringRect.Contains(e.Location)) //check if mouse point is inside the rectangle
+                        {
+                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255 - BookCover.Color.R, 255 - BookCover.Color.G, 255 - BookCover.Color.B)), stringRect);
+                            toremove = item;
+                            using (AddTextDialog textDialog = new AddTextDialog())
+                            {
+                                textDialog.DialogData = new AddTextDialogData
+                                { FontSize = (int)item.Font.Size, Text = item.Text, TextAlignment = item.Alignment };
+                                textDialog.ShowDialog(this);
+                                if (textDialog.DialogResult == DialogResult.OK)
+                                {
+                                    result = textDialog.DialogResult;
+                                    TextContext = textDialog.DialogData;
+                                    Font fn = new Font("Arial", TextContext.FontSize, FontStyle.Bold);
+                                    switch (TextContext.TextAlignment)
+                                    {
+                                        //when text is changed it is a little of off center
+                                        case StringAlignment.Center:
+                                            var stringMeasuresC = (g.MeasureString(toremove.Text, fn));
+                                            //could be better
+                                            toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(stringRect.X + (int)stringMeasuresC.Width / 2 - BookCover.Position.X, stringRect.Y /*- (int)stringMeasures.Height / 2 */- BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment };
+                                            break;
+                                        case StringAlignment.Near:
+                                            toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point((stringRect.X + (int)(g.MeasureString(TextContext.Text, fn).Width)) - BookCover.Position.X, stringRect.Y  /*(int)(g.MeasureString(TextContext.Text, fn).Height )*/ - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment }; break;
+                                        case StringAlignment.Far:
+
+                                            toadd = new StringGraphics
+                                            {
+                                                Font = fn,
+                                                Text = TextContext.Text,
+
+                                                Position = new Point(
+                                                    stringRect.X + stringRect.Width / 2 + g.MeasureString(TextContext.Text, fn).ToSize().Width / 2 -
+                                                    BookCover.Position.X,
+                                                    stringRect.Y /*- (int) stringMeasures.Height / 2*/ - BookCover.Position.Y),
+                                                Color = currentTextColor,
+                                                Alignment = TextContext.TextAlignment
+                                            };
+                                            break;
+                                    }
+                                    //BookCover.TextList.Remove(item);
+
                                 }
-                                //BookCover.TextList.Remove(item);
-
                             }
                         }
                     }
                 }
-            }
 
-            if (result == DialogResult.OK)
-            {
-            BookCover.TextList.Remove(toremove);
-            BookCover.TextList.Add(toadd);
+                if (result == DialogResult.OK)
+                {
+                    BookCover.TextList.Remove(toremove);
+                    BookCover.TextList.Add(toadd);
 
-            }
+                }
                 pictureBox.Refresh();
+            }
         }
 
         private void pictureBox_MouseClick(object sender, MouseEventArgs e)
