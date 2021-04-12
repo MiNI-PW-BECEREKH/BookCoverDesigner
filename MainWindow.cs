@@ -275,7 +275,7 @@ namespace WinFormsLab
 
                         if (stringRect.Contains(e.Location)) //check if mouse point is inside the rectangle
                         {
-                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255 - BookCover.Color.R, 255 - BookCover.Color.G, 255 - BookCover.Color.B)), stringRect);
+                            //g.DrawRectangle(new Pen(Color.FromArgb(255, 255 - BookCover.Color.R, 255 - BookCover.Color.G, 255 - BookCover.Color.B)), stringRect);
                             toremove = item;
                             using (AddTextDialog textDialog = new AddTextDialog())
                             {
@@ -296,7 +296,7 @@ namespace WinFormsLab
                                             toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point(stringRect.X + (int)stringMeasuresC.Width / 2 - BookCover.Position.X, stringRect.Y /*- (int)stringMeasures.Height / 2 */- BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment };
                                             break;
                                         case StringAlignment.Near:
-                                            toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point((stringRect.X + (int)(g.MeasureString(TextContext.Text, fn).Width)) - BookCover.Position.X, stringRect.Y  /*(int)(g.MeasureString(TextContext.Text, fn).Height )*/ - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment }; break;
+                                            toadd = new StringGraphics { Font = fn, Text = TextContext.Text, Position = new Point((stringRect.X + stringRect.Width/2 - (int)(g.MeasureString(TextContext.Text, fn).Width)/2) - BookCover.Position.X, stringRect.Y  /*(int)(g.MeasureString(TextContext.Text, fn).Height )*/ - BookCover.Position.Y), Color = currentTextColor, Alignment = TextContext.TextAlignment }; break;
                                         case StringAlignment.Far:
 
                                             toadd = new StringGraphics
