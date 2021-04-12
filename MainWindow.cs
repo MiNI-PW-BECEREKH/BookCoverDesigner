@@ -458,10 +458,7 @@ namespace WinFormsLab
                 using (Graphics g = pictureBox.CreateGraphics())
                 {
 
-                    //IT IS WORKING BUT LEFT TOP OF STRING MOVES TO MOUSE 
-                    //we need to get differenc between ContextRectangle and mouse position then add it to toModify position
-                    //g.DrawEllipse(new Pen(Color.Black),ContextRectangle.X-5,ContextRectangle.Y-5,5,5);
-                    //toModify.Position = new Point((e.X - BookCover.Position.X) - MouseFirstClickOffset.Width , (e.Y - BookCover.Position.Y) - MouseFirstClickOffset.Height );
+                    //item is not translated it is moved to the E.Location
                     switch (toModify.Alignment)
                     {
                         case StringAlignment.Center:
