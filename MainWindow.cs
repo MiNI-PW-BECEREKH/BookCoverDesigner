@@ -107,7 +107,9 @@ namespace WinFormsLab
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             if ((e.Button & MouseButtons.Middle) != 0 && toModify != null && ContextRectangle.Contains(e.Location))
+            {
                 MouseFirstClickOffset = new Size(e.X - ContextRectangle.X, e.Y - ContextRectangle.Y);
+            }
             if (pictureBox.Cursor == Cursors.Cross)
             {
                 pictureBox.Cursor = Cursors.Default;
@@ -448,12 +450,12 @@ namespace WinFormsLab
 
         }
 
+        private Point prevPoint;
         
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            var mouseRectangle = new Rectangle(ContextRectangle.X - 10, ContextRectangle.Y - 10,
-                ContextRectangle.Width + 10, ContextRectangle.Height + 10);
-            if ((e.Button & MouseButtons.Middle) != 0 && toModify != null /*&& mouseRectangle.Contains(e.Location)*/)
+
+            if ((e.Button & MouseButtons.Middle) != 0 && toModify != null   )
             {
                 using (Graphics g = pictureBox.CreateGraphics())
                 {
@@ -462,7 +464,7 @@ namespace WinFormsLab
                     switch (toModify.Alignment)
                     {
                         case StringAlignment.Center:
-                            toModify.Position = new Point((e.X - BookCover.Position.X) + ContextRectangle.Width / 2 - MouseFirstClickOffset.Width, (e.Y - BookCover.Position.Y) + ContextRectangle.Height / 2 - MouseFirstClickOffset.Height);
+                            toModify.Position = new Point(( e.X  - BookCover.Position.X) + ContextRectangle.Width / 2 - MouseFirstClickOffset.Width, ( e.Y  - BookCover.Position.Y) - MouseFirstClickOffset.Height);
                             ContextRectangle = new Rectangle
                             {
                                 Height = (int)g.MeasureString(toModify.Text, toModify.Font).Height,
@@ -502,7 +504,7 @@ namespace WinFormsLab
                     pictureBox.Refresh();
                 }
 
-
+                prevPoint = e.Location;
             }
         }
 
