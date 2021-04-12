@@ -1,5 +1,8 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Runtime.Serialization;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace WinFormsLab
 {
@@ -7,8 +10,27 @@ namespace WinFormsLab
     {
         public string Text { get; set; }
         public Point Position { get; set; } // position here passed relative to the book cover
-        public Font Font { get; set; }
-        public Color Color { get; set; }
+
+        [XmlIgnore()]
+        public Font Font
+        {
+            get;
+            set;
+        }
+
+        [Browsable(false)]
+        public string FontSerialize
+        {
+            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToInvariantString(Font); }
+            set { Font = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromInvariantString(value) as Font; }
+        }
+        [XmlIgnore()] public Color Color { get; set; }
+        [XmlElement("Color")]
+        public int ColorAsRgb
+        {
+            get { return Color.ToArgb(); }
+            set { Color = Color.FromArgb(value); }
+        }
 
         public StringAlignment Alignment { get; set; }
         public void Draw(Graphics g, object Canvas)

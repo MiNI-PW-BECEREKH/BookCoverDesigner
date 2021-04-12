@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using WinFormsLab.Annotations;
 
 namespace WinFormsLab
@@ -25,7 +26,7 @@ namespace WinFormsLab
         }
     }
 
-    class SpineAuthorGraphics : AuthorGraphics
+    public class SpineAuthorGraphics : AuthorGraphics
     {
         public void Draw(Graphics g, object canvas)
         {
@@ -94,12 +95,27 @@ namespace WinFormsLab
                     break;
             }
         }
+        [XmlIgnore()]
         public Font Font { get; set; } = new Font("Arial", 24);
-        public Color Color { get; set; } = Color.Black;
+
+        [Browsable(false)]
+        public string FontSerialize
+        {
+            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToInvariantString(Font); }
+            set { Font = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromInvariantString(value) as Font; }
+        }
+
+        [XmlIgnore()] public Color Color { get; set; } = Color.Black;
+        [XmlElement("Color")]
+        public int ColorAsRgb
+        {
+            get { return Color.ToArgb(); }
+            set { Color = Color.FromArgb(value); }
+        }
         public Size TextSize { get; set; } = new Size(24, 24);
     }
 
-    class FrontCoverAuthorGraphics : AuthorGraphics, INotifyPropertyChanged
+    public class FrontCoverAuthorGraphics : AuthorGraphics, INotifyPropertyChanged
     {
         public void Draw(Graphics g, object canvas)
         {
@@ -127,8 +143,22 @@ namespace WinFormsLab
 
         public Point Position { get; set; }
 
+        [XmlIgnore()]
         public Font Font { get; set; } = new Font("Arial", 24);
-        public Color Color { get; set; } = Color.Black;
+
+        [Browsable(false)]
+        public string FontSerialize
+        {
+            get { return TypeDescriptor.GetConverter(typeof(Font)).ConvertToInvariantString(Font); }
+            set { Font = TypeDescriptor.GetConverter(typeof(Font)).ConvertFromInvariantString(value) as Font; }
+        }
+        [XmlIgnore()] public Color Color { get; set; } = Color.Black;
+        [XmlElement("Color")]
+        public int ColorAsRgb
+        {
+            get { return Color.ToArgb(); }
+            set { Color = Color.FromArgb(value); }
+        }
         public Size TextSize { get; set; } = new Size(24, 24);
 
         public FrontCoverAuthorGraphics()

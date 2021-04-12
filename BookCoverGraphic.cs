@@ -7,11 +7,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using WinFormsLab.Annotations;
 
 namespace WinFormsLab
 {
-    class BookCoverGraphics : IGraphics, INotifyPropertyChanged
+    public class BookCoverGraphics : IGraphics, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -44,8 +45,14 @@ namespace WinFormsLab
         public Size Size { get; set; }
         public int SpineWidth { get; set; }
 
+        [XmlIgnore()]
         public Color Color { get; set; }
-
+        [XmlElement("Color")]
+        public int ColorAsRgb
+        {
+            get { return Color.ToArgb(); }
+            set { Color = Color.FromArgb(value); }
+        }
         public SpineTitleGraphics SpineTitle { get; set; }
         public SpineAuthorGraphics SpineAuthor { get; set; }
 

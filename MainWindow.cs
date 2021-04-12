@@ -5,10 +5,12 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace WinFormsLab
 { 
@@ -168,6 +170,11 @@ namespace WinFormsLab
                     BookCover.Position = new Point(pictureBox.Width / 2 - BookCover.Size.Width / 2, pictureBox.Height / 2 - BookCover.Size.Height / 2);
                     BookCover.TextList.Clear();
                     BookCover.Color = Color.LightPink;
+                    BookCover.SpineAuthor.Text = String.Empty;
+                    BookCover.SpineTitle.Text = String.Empty;
+                    BookCover.FrontCoverAuthor.Text = String.Empty;
+                    BookCover.FrontCoverTitle.Text = String.Empty;
+
                 }
             }
             pictureBox.Refresh();
@@ -397,11 +404,11 @@ namespace WinFormsLab
                 using (Graphics g = pictureBox.CreateGraphics())
                 {
 
- 
+                    //IT IS WORKING BUT LEFT TOP OF STRING MOVES TO MOUSE 
                     //we need to get differenc between ContextRectangle and mouse position then add it to toModify position
                     Size offSize = new Size(e.X - ContextRectangle.X, e.Y - ContextRectangle.Y);
                     //g.DrawEllipse(new Pen(Color.Black),ContextRectangle.X-5,ContextRectangle.Y-5,5,5);
-                    toModify.Position = new Point(toModify.Position.X -MouseFirstClickOffset.Width + offSize.Width , toModify.Position.Y - MouseFirstClickOffset.Height + offSize.Height );
+                    toModify.Position = new Point(e.X - BookCover.Position.X - MouseFirstClickOffset.Width  , e.Y - BookCover.Position.Y - MouseFirstClickOffset.Height );
                     ContextRectangle.Location = new Point(ContextRectangle.X + offSize.Width,
                         ContextRectangle.Y + offSize.Height);
                     
@@ -429,5 +436,54 @@ namespace WinFormsLab
             splitContainer.SplitterDistance = size.Width;
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using(SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+
+                saveFileDialog.Filter = "xml files (*.xml)| *.xml";
+                saveFileDialog.FilterIndex = 1;
+                saveFileDialog.RestoreDirectory = true;
+                if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (saveFileDialog.FileName != "")
+                    {
+                        var stream = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                        var xmlSerializer = new XmlSerializer(BookCover.GetType());
+                        xmlSerializer.Serialize(stream,BookCover);
+                        stream.Close();
+                    }
+                }
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "xml files (*.xml) | *.xml";
+                    openFileDialog.FilterIndex = 1;
+                    openFileDialog.RestoreDirectory = true;
+                    if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        if (openFileDialog.FileName != "")
+                        {
+                            var stream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+                            var xmlSerializer = new XmlSerializer(BookCover.GetType());
+                            BookCover = (BookCoverGraphics)xmlSerializer.Deserialize(stream);
+                            stream.Close();
+                            pictureBox.Refresh();
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK);
+            }
+           
+        }
     }
 }
