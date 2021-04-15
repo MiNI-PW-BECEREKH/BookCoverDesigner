@@ -429,8 +429,7 @@ namespace WinFormsLab
                         }
 
 
-                        if (e.X < stringRect.Right && e.X >= stringRect.Left && e.Y < stringRect.Bottom &&
-                            e.Y >= stringRect.Top) //check if mouse point is inside the rectangle
+                        if (stringRect.Contains(e.Location)) //check if mouse point is inside the rectangle
                         {
                             
                             ContextRectangle = stringRect;
