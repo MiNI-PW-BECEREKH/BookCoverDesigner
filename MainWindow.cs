@@ -180,6 +180,8 @@ namespace WinFormsLab
 
                 }
             }
+            ContextRectangle = Rectangle.Empty;
+            toModify = (StringGraphics) null;
             pictureBox.Refresh();
         }
 
@@ -559,6 +561,8 @@ namespace WinFormsLab
                             var xmlSerializer = new XmlSerializer(BookCover.GetType());
                             BookCover = (BookCoverGraphics)xmlSerializer.Deserialize(stream);
                             stream.Close();
+                            ContextRectangle = Rectangle.Empty;
+                            toModify = (StringGraphics) null;
                             pictureBox.Refresh();
                         }
                     }
